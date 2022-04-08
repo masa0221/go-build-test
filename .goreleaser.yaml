@@ -5,19 +5,20 @@ before:
   hooks:
     - go mod tidy
 builds:
-  -
-    main: .
+  - main: .
+    binary: go-build-test
+    ldflags:
+      - -s -w
 archives:
-  - replacements:
-      darwin: Darwin
-      linux: Linux
-checksum:
-  name_template: 'checksums.txt'
-snapshot:
-  name_template: "{{ .Tag }}-next"
-changelog:
-  sort: asc
-  filters:
-    exclude:
-      - '^docs:'
-      - '^test:'
+  - name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+    replacements:
+      darwin: darwin
+      linux: linux
+      windows: windows
+      386: i386
+      amd64: x86_64
+    format_overrides:
+      - goos: windows
+        format: zip
+release:
+  prerelease: auto
