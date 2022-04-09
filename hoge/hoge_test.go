@@ -5,5 +5,5 @@ import (
 )
 
 func TestReverse(t *testing.T) {
-	t.Error("hogehog")
+	// t.Error("hogehog")
 }
