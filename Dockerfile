@@ -15,4 +15,3 @@ RUN go build -o /docker-gs-ping
 ENV CGO_ENABLED=0
 
 CMD [ "/docker-gs-ping" ]
-
