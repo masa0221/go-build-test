@@ -14,29 +14,3 @@ archives:
   - format: zip
     name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
     wrap_in_directory: true
-checksum:
-  name_template: 'checksums.txt'
-snapshot:
-  name_template: "{{ .Tag }}-next"
-changelog:
-  sort: asc
-  filters:
-    exclude:
-      - '^docs:'
-      - '^test:'
-brews:
-  -
-    name: go-build-test
-    github:
-      owner: masa0221
-      name: homebrew-dummytap
-    url_template: "https://github.com/masa0221/homebrew-dummytap/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
-    commit_author:
-      name: goreleaserbot
-      email: goreleaser@carlosbecker.com
-    homepage: "https://github.com/masa0221/go-build-test"
-    description: "test description."
-    test: |
-      system "#{bin}/go-build-test help"
-    install: |
-      bin.install "go-build-test"
