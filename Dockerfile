@@ -1,9 +1,18 @@
-FROM golang:alpine AS build-stage
-ADD . /work
-WORKDIR /work
-RUN go build -o entrypoint .
+# syntax=docker/dockerfile:1
+FROM golang:1.17-alpine
+RUN apk add git chromium chromium-chromedriver
 
-FROM alpine:latest
-COPY --from=build-stage /work/entrypoint /usr/local/bin/entrypoint
-ENTRYPOINT ["/usr/local/bin/entrypoint"]
+WORKDIR /app
+
+COPY go.mod ./
+COPY go.sum ./
+RUN go mod download
+
+COPY *.go ./
+
+RUN go build -o /docker-gs-ping
+
+ENV CGO_ENABLED=0
+
+CMD [ "/docker-gs-ping" ]
 
