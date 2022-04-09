@@ -1,4 +1,5 @@
 FROM golang:alpine AS build-stage
+RUN apk update && apk add git
 ADD . /work
 WORKDIR /work
 RUN go build -o entrypoint .
